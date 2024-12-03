@@ -1,0 +1,54 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Kubernetes Tools
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      # Step 3: Configure Kubeconfig securely
+      - name: Set up Kubeconfig
+        env:
+          KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
+        run: |
+          echo "$KUBECONFIG_FILE" | base64 -d > kubeconfig
+          chmod 600 kubeconfig
+          export KUBECONFIG=$PWD/kubeconfig
+
+      # Step 4: Install Terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      # Step 5: Terraform Init
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      # Step 6: Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Step 7: Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # Step 8: Terraform Apply
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
