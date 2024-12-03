@@ -25,6 +25,7 @@ jobs:
         env:
           KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
         run: |
+          mkdir -p ~/.kube
           echo "$KUBECONFIG_FILE" | base64 -d > ~/.kube/config
           chmod 600 ~/.kube/config
           export KUBECONFIG=~/.kube/config
