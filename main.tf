@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "kubernetes" {
-  config_path = "~/.kube/config" # Path to Minikube's kubeconfig file
+  config_path = "~/.kube/config"
 }
 
 provider "null" {}

@@ -1,0 +1,60 @@
+# Ignore Terraform state files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate.*
+*.tfplan
+
+# Ignore Terraform .terraform directory
+.terraform/
+
+# Ignore Terraform lock files
+.terraform.lock.hcl
+
+# Ignore local kubeconfig files
+.kube/
+kubeconfig
+
+# Ignore logs and debugging files
+*.log
+debug.log
+
+# Ignore Minikube binary
+minikube-linux-amd64
+
+# Ignore .git directory and related artifacts
+.git/
+*.orig
+
+# Ignore temporary files created by editors
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Python cache files (if applicable)
+__pycache__/
+*.py[cod]
+
+# Ignore Node.js dependencies (if applicable)
+node_modules/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore compiled files
+*.out
+*.o
+*.class
+*.jar
+*.war
+*.pyc
